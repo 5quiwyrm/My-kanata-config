@@ -1,0 +1,100 @@
+;; Kanata config
+
+(deflocalkeys-win
+    < 226
+)
+
+(defsrc 
+    esc     f1      f2  f3  f4  f5      f6  f7  f8      f9      f10 f11 f12         
+    grv     1       2   3   4   5       6   7   8       9       0   -   =   bspc
+    tab     q       w   e   r   t       y   u   i       o       p   [   ]   \
+    caps    a       s   d   f   g       h   j   k       l       ;   '   ret
+    lsft <  z       x   c   v   b       n   m   ,       .       /       rsft
+    lctl    lmet    lalt        spc             ralt            comp    rctl
+)
+
+(defalias
+    qwr (tap-hold 100 2000 _ (layer-switch qwerty))
+    ktm (tap-hold 100 2000 _ (layer-switch kuntum))
+    sym (one-shot 500 (layer-while-held symbol))
+)
+
+(defcfg
+    windows-altgr cancel-lctl-press
+    process-unmapped-keys yes
+)
+
+(deflayer qwerty 
+    @ktm        _       _   _   _   _       _   _   _       _       _   _   _         
+    _           _       _   _   _   _       _   _   _       _       _   _   _   _
+    _           _       _   _   _   _       _   _   _       _       _   _   _   _
+    _           _       _   _   _   _       _   _   _       _       _   _   _
+    _    _      _       _   _   _   _       _   _   _       _       _       _
+    _           _       _           _               _               _       _
+)
+
+(defalias
+    dww C-bspc
+)
+
+(defalias
+    nkp (layer-switch navigation_k)
+)
+
+(deflayer kuntum
+    @qwr        _       _   _   _   _       _   _   _       _       _   _    _          
+    _           _       _   _   _   _       _   _   _       _       _   _    _   _
+    _           v       l   n   d   k       j   w   o       u       ,   _    _   _
+    @dww        t       s   r   h   f       g   c   a       e       i   ;    _
+    _       _   z       x   p   b   '       m   y   q       /       .        @nkp 
+    _           _       _           _               rsft            @sym     _
+)
+
+(defalias
+    mwu (mwheel-up 50 120)
+    mwd (mwheel-down 50 120)
+
+    mau (movemouse-accel-up 1 10000 1 5)
+    mal (movemouse-accel-left 1 10000 1 5)
+    mad (movemouse-accel-down 1 10000 1 5)
+    mar (movemouse-accel-right 1 10000 1 5)
+
+    qut A-f4
+)
+
+(defalias
+    kta (layer-switch kuntum)
+)
+
+(deflayer navigation_k 
+    _           _       _       _       _       _   	 _       _       _       _       _       _   _          
+    _           _       _       _       _       _   	 _       _       _       _       _       _   _   _
+    _           @qut    _       _       _       _   	 mmid    mlft    @mau    mrgt    mlft    _   _   _
+    _           _       lalt    lctl    lsft    esc	 @mwu    @mal    @mad    @mar    mlft    _   _
+    _       _   _       _       _       _       _	 @mwd    lft     down    up      rght        @kta
+    _           _       _               _                   _               _       _
+)
+
+(defalias
+    sfq S-1
+    sfw S-2
+    sfe S-3
+    sfr S-4
+    sft S-5
+    sfy S-6
+    sfu S-7
+    sfi S-8
+    sfo S-9
+    sfp S-0
+)
+
+
+
+(deflayer symbol
+    _           _       _   _   _   _       _   _       _       _       _       _   _         
+    _           _       _   _   _   _       _   _       _       _       _       _   _   _
+    _           @sfp    7   8   9   home    _   @sft    @sfy    @sfu    @sfi    =   _   _
+    _           0       4   5   6   end     _   @sfq    @sfw    @sfe    @sfr    -   _
+    _    _      @sfo    1   2   3   `       _   [       ]       \       _       _   
+    _           _       _           _                   _               _       _
+)
