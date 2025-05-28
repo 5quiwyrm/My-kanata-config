@@ -4,8 +4,8 @@
     < 226
 )
 
-(defsrc 
-    esc     f1      f2  f3  f4  f5      f6  f7  f8      f9      f10 f11 f12         
+(defsrc
+    esc     f1      f2  f3  f4  f5      f6  f7  f8      f9      f10 f11 f12
     grv     1       2   3   4   5       6   7   8       9       0   -   =   bspc
     tab     q       w   e   r   t       y   u   i       o       p   [   ]   \
     caps    a       s   d   f   g       h   j   k       l       ;   '   ret
@@ -16,6 +16,7 @@
 (defalias
     qwr (tap-hold 100 2000 _ (layer-switch qwerty))
     ktm (tap-hold 100 2000 _ (layer-switch kuntum))
+    ngt (tap-hold 100 2000 _ (layer-switch night))
     sym (layer-while-held symbol)
 )
 
@@ -24,9 +25,9 @@
     process-unmapped-keys yes
 )
 
-(deflayer qwerty 
-    @ktm        _       _   _   _   _       _   _   _       _       _   _   _         
-    _           _       _   _   _   _       _   _   _       _       _   _   _   _
+(deflayer qwerty
+    @ktm        _       _   _   _   _       _   _   _       _       _   _   _
+    @ngt        _       _   _   _   _       _   _   _       _       _   _   _   _
     _           _       _   _   _   _       _   _   _       _       _   _   _   _
     _           _       _   _   _   _       _   _   _       _       _   _   _
     _    _      _       _   _   _   _       _   _   _       _       _       _
@@ -37,17 +38,22 @@
     dww C-bspc
 )
 
-;; (defalias
-;;     nkp (layer-switch navigation_k)
-;; )
-
 (deflayer kuntum
-    @qwr        _       _   _   _   _       _   _   _       _       _   _    _          
+    @qwr        _       _   _   _   _       _   _   _       _       _   _    _
     _           _       _   _   _   _       _   _   _       _       _   _    _   _
     _           v       l   n   d   k       j   w   o       u       ,   _    _   _
     @dww        t       s   r   h   f       g   c   a       e       i   ;    _
-    _       _   z       x   p   b   '       m   y   q       /       .        @mtd 
+    _       _   z       x   p   b   '       m   y   q       /       .        @mtd
     _           _       _           _               rsft            @sym     _
+)
+
+(deflayer night
+    @qwr        _       _   _   _   _       _   _   _       _       _   _    _
+    _           _       _   _   _   _       _   _   _       _       _   _    _   _
+    _           b       f   l   k   q       '   g   o       u       ,   _    _   @mtn
+    @dww        n       s   h   t   m       y   c   a       e       i   ;    _
+    _       _   v       j   d   z   x       p   w   -       /       .        _
+    _           _       _           _               r               @sym     _
 )
 
 (defalias
@@ -64,29 +70,31 @@
 
 (defalias
     kta (layer-switch kuntum)
+    ngi (layer-switch night)
 )
-;; 
-;; (deflayer navigation_k 
-;;     _           _       _       _       _       _   	 _       _       _       _       _       _   _          
-;;     _           _       _       _       _       _   	 _       _       _       _       _       _   _   _
-;;     _           @qut    mlft    @mau    mrgt	_        _       _       _       _       _       _   _   _
-;;     _           _       @mal    @mad    @mar    _        _       _       _       _       _       _   _
-;;     _       _   _       @mwd    @mwu    @kta    _        _       _       _       _       _           @kta
-;;     _           _       _               _                   _               _       _
-;; )
 
 (defalias
     mtd (tap-dance 200 ((layer-while-held mouse) (layer-switch mouse)))
+    mtn (tap-dance 200 ((layer-while-held mouse-night) (layer-switch mouse-night)))
     gwl C-left
     gwr C-right
 )
 
-(deflayer mouse 
-    @ktm        _       _     _     _      _     _   _   _       _       _   _   _         
+(deflayer mouse
+    @ktm        _       _     _     _      _     _   _   _       _       _   _   _
     _           _       _     _     _      _     _   _   _       _       _   _   _   _
-    _           @qut    _     @mau  _      @mwu  _   _   _       _       _   _   _   _
+    _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   _
     _           mrgt    @mal  @mad  @mar   @mwd  _   _   _       _       _   _   _
-    _    _      left    up    down  right  _     _   _   _       _       _       @kta
+    _    _      left    up    down  right  _     _   _   _       _       lctl    @kta
+    _           _       _                  mlft          _               _       _
+)
+
+(deflayer mouse-night
+    @ngt        _       _     _     _      _     _   _   _       _       _   _   _
+    _           _       _     _     _      _     _   _   _       _       _   _   _   _
+    _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   _
+    _           mrgt    @mal  @mad  @mar   @mwd  _   _   _       _       _   _   _
+    _    _      left    up    down  right  _     _   _   _       _       lctl    @ngi
     _           _       _                  mlft          _               _       _
 )
 
@@ -106,10 +114,10 @@
 
 
 (deflayer symbol
-    _           _       _   _   _   _       _   _       _       _       _       _   _         
+    _           _       _   _   _   _       _   _       _       _       _       _   _
     _           _       _   _   _   _       _   _       _       _       _       _   _   _
     _           @sfp    7   8   9   home    _   @sft    @sfy    @sfu    @sfi    =   _   _
     _           0       4   5   6   end     _   @sfq    @sfw    @sfe    @sfr    -   _
-    _    _      @sfo    1   2   3   `       _   [       ]       \       _       _   
+    _    _      @sfo    1   2   3   `       _   [       ]       \       _       _
     _           _       _           _                   _               _       _
 )
