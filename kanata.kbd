@@ -15,7 +15,6 @@
 
 (defalias
     qwr (tap-hold 100 2000 _ (layer-switch qwerty))
-    ktm (tap-hold 100 2000 _ (layer-switch kuntum))
     ngt (tap-hold 100 2000 _ (layer-switch night))
     sym (layer-while-held symbol)
 )
@@ -26,8 +25,8 @@
 )
 
 (deflayer qwerty
-    @ktm        _       _   _   _   _       _   _   _       _       _   _   _
-    @ngt        _       _   _   _   _       _   _   _       _       _   _   _   _
+    @ngt        _       _   _   _   _       _   _   _       _       _   _   _
+    _           _       _   _   _   _       _   _   _       _       _   _   _   _
     _           _       _   _   _   _       _   _   _       _       _   _   _   _
     _           _       _   _   _   _       _   _   _       _       _   _   _
     _    _      _       _   _   _   _       _   _   _       _       _       _
@@ -38,21 +37,12 @@
     dww C-bspc
 )
 
-(deflayer kuntum
-    @qwr        _       _   _   _   _       _   _   _       _       _   _    _
-    _           _       _   _   _   _       _   _   _       _       _   _    _   _
-    _           v       l   n   d   k       j   w   o       u       ,   _    _   _
-    @dww        t       s   r   h   f       g   c   a       e       i   ;    _
-    _       _   z       x   p   b   '       m   y   q       /       .        @mtd
-    _           _       _           _               rsft            @sym     _
-)
-
 (deflayer night
     @qwr        _       _   _   _   _       _   _   _       _       _   _    _
     _           _       _   _   _   _       _   _   _       _       _   _    _   _
-    _           b       f   l   k   q       '   g   o       u       ,   _    _   @mtn
-    @dww        n       s   h   t   m       y   c   a       e       i   ;    _
-    _       _   v       j   d   z   x       p   w   -       /       .        _
+    _           b       f   l   d   k       j   w   o       u       ,   _    _   @mtn
+    @dww        n       s   h   t   m       g   c   a       e       i   ;    _
+    _       _   z       x   rpt v   q       p   y   '       /       .        _
     _           _       _           _               r               @sym     _
 )
 
@@ -69,32 +59,21 @@
 )
 
 (defalias
-    kta (layer-switch kuntum)
     ngi (layer-switch night)
 )
 
 (defalias
-    mtd (tap-dance 200 ((layer-while-held mouse) (layer-switch mouse)))
     mtn (tap-dance 200 ((layer-while-held mouse-night) (layer-switch mouse-night)))
     gwl C-left
     gwr C-right
 )
 
-(deflayer mouse
-    @ktm        _       _     _     _      _     _   _   _       _       _   _   _
-    _           _       _     _     _      _     _   _   _       _       _   _   _   _
-    _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   _
-    _           mrgt    @mal  @mad  @mar   @mwd  _   _   _       _       _   _   _
-    _    _      left    up    down  right  _     _   _   _       _       lctl    @kta
-    _           _       _                  mlft          _               _       _
-)
-
 (deflayer mouse-night
-    @ngt        _       _     _     _      _     _   _   _       _       _   _   _
+    @ngi        _       _     _     _      _     _   _   _       _       _   _   _
     _           _       _     _     _      _     _   _   _       _       _   _   _   _
-    _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   _
+    _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   @ngi
     _           mrgt    @mal  @mad  @mar   @mwd  _   _   _       _       _   _   _
-    _    _      left    up    down  right  _     _   _   _       _       lctl    @ngi
+    _    _      left    up    down  right  _     _   _   _       _       lctl    _
     _           _       _                  mlft          _               _       _
 )
 
