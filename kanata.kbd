@@ -16,7 +16,9 @@
 (defalias
     qwr (tap-hold 100 2000 _ (layer-switch qwerty))
     ngt (tap-hold 100 2000 _ (layer-switch night))
+    wnt (tap-hold 100 2000 _ (layer-switch wide-night))
     sym (layer-while-held symbol)
+    wsm (layer-while-held wide-symbol)
 )
 
 (defcfg
@@ -26,7 +28,7 @@
 
 (deflayer qwerty
     @ngt        _       _   _   _   _       _   _   _       _       _   _   _
-    _           _       _   _   _   _       _   _   _       _       _   _   _   _
+    @wnt        _       _   _   _   _       _   _   _       _       _   _   _   _
     _           _       _   _   _   _       _   _   _       _       _   _   _   _
     _           _       _   _   _   _       _   _   _       _       _   _   _
     _    _      _       _   _   _   _       _   _   _       _       _       _
@@ -34,16 +36,33 @@
 )
 
 (defalias
+    mgc (switch
+        ((key-history u 1)) e break
+        ((key-history a 1)) y break
+        ((key-history y 1)) p break
+        ((key-history x 1)) t break
+        ((key-history h 1)) y break
+        () rpt break
+    )
     dww C-bspc
 )
 
 (deflayer night
-    @qwr        _       _   _   _   _       _   _   _       _       _   _    _
-    _           _       _   _   _   _       _   _   _       _       _   _    _   _
-    _           b       f   l   d   k       j   w   o       u       ,   _    _   @mtn
-    @dww        n       s   h   t   m       g   c   a       e       i   ;    _
-    _       _   z       x   rpt v   q       p   y   '       /       .        _
-    _           _       _           _               r               @sym     _
+    @qwr        _       _   _    _   _       _   _   _       _       _   _    _
+    _           _       _   _    _   _       _   _   _       _       _   _    _   _
+    _           b       f   l    d   k       j   w   o       u       ,   _    _   @mtn
+    @dww        n       s   h    t   m       g   c   a       e       i   ;    _
+    _       _   z       x   @mgc v   q       p   y   '       /       .        _
+    _           _       _            _               r               @sym     _
+)
+
+(deflayer wide-night
+    @qwr        _       _   _    _   _       _   _   _       _       _   _    _
+    _           _       _   _    _   _       _   _   _       _       _   _    _   _
+    _           b       f   l    d   k       [   j   w       o       u   ,    .   @wmn
+    @dww        n       s   h    t   m       ;   g   c       a       e   i    _
+    _       _   z       x   @mgc v   q       ]   p   y       '       /        _
+    _           _       _            _               r               @wsm     _
 )
 
 (defalias
@@ -58,12 +77,12 @@
     qut A-f4
 )
 
-(defalias
-    ngi (layer-switch night)
-)
+(defalias ngi (layer-switch night))
+(defalias wni (layer-switch wide-night))
 
 (defalias
     mtn (tap-dance 200 ((layer-while-held mouse-night) (layer-switch mouse-night)))
+    wmn (tap-dance 200 ((layer-while-held wide-mouse-night) (layer-switch wide-mouse-night)))
     gwl C-left
     gwr C-right
 )
@@ -74,6 +93,15 @@
     _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   @ngi
     _           mrgt    @mal  @mad  @mar   @mwd  _   _   _       _       _   _   _
     _    _      left    up    down  right  _     _   _   _       _       lctl    _
+    _           _       _                  mlft          _               _       _
+)
+
+(deflayer wide-mouse-night
+    @wni        _       _     _     _      _     _   _   _       _       _   _   _
+    _           _       _     _     _      _     _   _   _       _       _   _   _   _
+    _           @qut    _     @mau  esc    @mwu  _   _   _       _       _   _   _   @wni
+    _           mrgt    @mal  @mad  @mar   @mwd  _   _   _       _       _   _   _
+    _    _      left    up    down  right  _     _   _   _       _       _   _
     _           _       _                  mlft          _               _       _
 )
 
@@ -99,4 +127,13 @@
     _           0       4   5   6   end     _   @sfq    @sfw    @sfe    @sfr    -   _
     _    _      @sfo    1   2   3   `       _   [       ]       \       _       _
     _           _       _           _                   _               _       _
+)
+
+(deflayer wide-symbol
+    _           _       _   _   _   _       _   _   _       _       _       _   _
+    _           _       _   _   _   _       _   _   _       _       _       _   _   _
+    _           @sfp    7   8   9   home    _   =   @sft    @sfy    @sfu    @sfi    _   _
+    _           0       4   5   6   end     _   -   @sfq    @sfw    @sfe    @sfr    _
+    _    _      @sfo    1   2   3   `       _   _   [       ]       \       _
+    _           _       _           _               _               _       _
 )
